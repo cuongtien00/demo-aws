@@ -1,5 +1,5 @@
 import React  from 'react'
-import {useState}   from 'react'
+import {useState,useEffect}   from 'react'
 import {Form,Button,Card,Row, Col} from 'react-bootstrap'
 import data from '../store/data'
 // import logo from '../logo.svg';
@@ -7,7 +7,6 @@ import data from '../store/data'
 export default function FormAdd() {
   const [newComment,setNewComment]=useState("")
   const [newImage,setNewImage]=useState("")
-  const [newData,setNewData]=useState(data)
 
   const handleSubmitForm= (e)=>{
     const comment={
@@ -15,8 +14,10 @@ export default function FormAdd() {
       img: newImage,
     }
     data.name.push(comment)
-    setNewData(data)
+    setNewComment("")
+    setNewImage("")
 }
+
 const handleChange = event => {
   setNewComment(event.target.value);
 
@@ -37,13 +38,13 @@ const onChangeNewImage  = event => {
       />
       <Form.Group controlId="formFileMultiple" className="mb-3">
         <Form.Label>Multiple files input example</Form.Label>
-        <Form.Control type="file" onChange={onChangeNewImage} multiple />
+        <Form.Control type="text" value={newImage} onChange={onChangeNewImage} multiple />
       </Form.Group>
       <div style={{textAlign: 'center'}}>
       <Button onClick={handleSubmitForm}>OKE</Button>
       </div>
       <Row xs={1} md={4} className="g-4">
-      {newData.name.map((product, index) =>(
+      {data.name.map((product, index) =>(
         <Col key={index}>
           <Card>
             <Card.Img variant="top" style={{ maxHeight :"500px"}}  src={product.img} />
